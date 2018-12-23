@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_toro.*
 import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
-import toro.plus.josh.toro.models.enums.Keys
+import toro.plus.josh.toro.models.enums.Data
 import toro.plus.josh.toro.models.objects.Message
 import toro.plus.josh.toro.tools.Storage
 
@@ -27,7 +27,11 @@ class ToroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_toro)
 
         message_recycler?.adapter = MessageAdapter()
-        messages.addAll((Storage.get(Keys.MESSAGES) as ArrayList<Message>?) ?: arrayListOf(Message()))
+        messages.addAll((Storage.get(Data.MESSAGES) as ArrayList<Message>?) ?: arrayListOf(Message()))
+
+        fab?.setOnClickListener {
+            goToMessage(Message())
+        }
     }
 
 
@@ -44,13 +48,17 @@ class ToroActivity : AppCompatActivity() {
             )
         }
 
+        fun update() {
+            notifyDataSetChanged()
+        }
+
         override fun getItemCount(): Int = messages.size
 
         override fun onBindViewHolder(holder: MessageHolder, position: Int) {
             val message = messages[position]
 
             holder.from.text = message.sender
-            holder.to.text = message.receiver
+            holder.to.text = message.recipient
             holder.date.text = message.dateReceived
             holder.message.text = message.message
 
@@ -58,7 +66,7 @@ class ToroActivity : AppCompatActivity() {
         }
 
         private fun colorCard(holder: MessageHolder, color: Color) {
-            holder.card.setCardBackgroundColor(ContextCompat.getColor(this@ToroActivity, color.color))
+            holder.card.setCardBackgroundColor(ContextCompat.getColor(this@ToroActivity, color.colorLight))
             holder.from.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
             holder.to.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
             holder.message.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
@@ -76,12 +84,28 @@ class ToroActivity : AppCompatActivity() {
                 card.setOnClickListener(this)
             }
 
-            override fun onClick(v: View?) {
-                val message = messages[adapterPosition]
-                val intent = Intent(this@ToroActivity, EditMessageActivity::class.java)
-                intent.putExtra(Toro.EXTRA_MESSAGE, message)
-                startActivityForResult(intent, Toro.REQUEST_MESSAGE)
-            }
+            override fun onClick(v: View?) = goToMessage(messages[adapterPosition])
         }
+    }
+
+
+    // UTLITIES
+
+    fun goToMessage(message: Message) {
+        val intent = Intent(this@ToroActivity, MessageActivity::class.java)
+        intent.putExtra(Toro.EXTRA_MESSAGE, message)
+        startActivityForResult(intent, Toro.REQUEST_MESSAGE)
+    }
+
+    fun updatedMessages(): ArrayList<Message> = (Storage.get(Data.MESSAGES) as ArrayList<Message>?) ?: arrayListOf(Message())
+
+
+    // OVERRIDES
+
+    override fun onPostResume() {
+        super.onPostResume()
+        messages.clear()
+        messages.addAll(updatedMessages())
+        (message_recycler?.adapter as MessageAdapter?)?.update()
     }
 }

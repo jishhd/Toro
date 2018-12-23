@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                tools:text="To: Josh"/>
+                tools:text="@tools:sample/full_names"/>
             
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/date"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
-                tools:text="12/25/2018"/>
+                tools:text="@tools:sample/date/ddmmyy"/>
         
         </LinearLayout>
         
@@ -40,7 +40,7 @@
             style="@style/Text.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="You're just so great. Go you!"
+            tools:text="@tools:sample/lorem/random"
             android:ellipsize="end"
             android:gravity="start"
             android:maxLines="3"/>
@@ -50,7 +50,7 @@
             style="@style/Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="From: Josh"
+            tools:text="@tools:sample/full_names"
             android:gravity="end"/>
     
     </LinearLayout>

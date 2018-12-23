@@ -2,13 +2,16 @@ package toro.plus.josh.toro
 
 import android.app.Application
 import toro.plus.josh.toro.tools.Storage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Toro() : Application() {
 
     companion object {
         val TAG = Toro::class.java.name
-        const val STRING = "string"
-        const val MESSAGES = "messages"
+
+        // constants
+        const val DATE_STRING = "dd/MM/yyyy"
 
         // request codes
         const val REQUEST_MESSAGE = 0
@@ -16,6 +19,10 @@ class Toro() : Application() {
         // extras
         @JvmStatic
         val EXTRA_MESSAGE = "$TAG.message"
+
+        // utilities
+        @JvmStatic
+        fun getDate() = SimpleDateFormat(DATE_STRING, Locale.US).format(Calendar.getInstance().time)
     }
 
     override fun onCreate() {

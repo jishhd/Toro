@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/constraint_layout"
+    tools:context=".activities.ToroActivity">
+    
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/message_coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/toolbar_padding">
+                
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Text.Small"
+                    android:id="@+id/message_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@tools:sample/date/ddmmyy"
+                    android:gravity="end"
+                    android:layout_margin="@dimen/small"/>
+                
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Recipient"
+                    android:id="@+id/text_to">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/Text.Large.Bold"
+                        android:id="@+id/message_recipient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="@tools:sample/full_names"
+                        android:inputType="textPersonName|textCapWords"
+                        android:gravity="start"/>
+                </com.google.android.material.textfield.TextInputLayout>
+    
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Message.Body"
+                    android:id="@+id/text_body">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/Text.Medium.Bold"
+                        android:id="@+id/message_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@tools:sample/lorem"
+                        android:minLines="8"
+                        android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
+                        android:gravity="start"/>
+                </com.google.android.material.textfield.TextInputLayout>
+    
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Sender"
+                    android:id="@+id/text_from">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/Text.Large.Bold"
+                        android:id="@+id/message_sender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="@tools:sample/full_names"
+                        android:inputType="textPersonName|textCapWords"
+                        android:gravity="end"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                
+            </LinearLayout>
+            
+        </ScrollView>
+        
+        <com.google.android.material.bottomappbar.BottomAppBar
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar"
+            android:layout_gravity="bottom"
+            app:fabAlignmentMode="end"
+            app:fabCradleMargin="@dimen/xxsmall"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabCradleRoundedCornerRadius="@dimen/xsmall">
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@null">
+                
+                <ImageButton style="@style/ButtonCircleColor.Red"/>
+                
+                <ImageButton style="@style/ButtonCircleColor.Orange"/>
+                
+                <ImageButton style="@style/ButtonCircleColor.Yellow"/>
+                
+                <ImageButton style="@style/ButtonCircleColor.Green"/>
+                
+                <ImageButton style="@style/ButtonCircleColor.Blue"/>
+                
+                <ImageButton style="@style/ButtonCircleColor.Purple"/>
+            
+            </LinearLayout>
+        
+        </com.google.android.material.bottomappbar.BottomAppBar>
+        
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:tint="@color/white"
+            app:fabSize="normal"
+            app:layout_anchor="@id/bottom_bar"/>
+    
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

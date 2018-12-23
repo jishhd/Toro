@@ -45,6 +45,35 @@
         <item name="android:textStyle">bold</item>
     </style>
     
+    <style name="Sender" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/small</item>
+        <item name="android:hint">@string/text_from</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:inputType">textPersonName|textCapWords</item>
+    </style>
+    
+    <style name="Recipient" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/small</item>
+        <item name="android:hint">@string/text_to</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:inputType">textPersonName|textCapWords</item>
+    </style>
+    
+    <style name="Message.Body" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/small</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:inputType">textAutoComplete|textCapSentences</item>
+    </style>
+    
     
     <!-- COLORS -->
     
@@ -61,37 +90,37 @@
     
     <style name="ButtonCircleColor.Red">
         <item name="android:id">@id/btn_color_red</item>
-        <item name="android:tint">@color/dark_red</item>
+        <item name="android:tint">@color/red</item>
         <item name="android:contentDescription">@string/color_red</item>
     </style>
     
     <style name="ButtonCircleColor.Orange">
         <item name="android:id">@id/btn_color_orange</item>
-        <item name="android:tint">@color/dark_orange</item>
+        <item name="android:tint">@color/orange</item>
         <item name="android:contentDescription">@string/color_orange</item>
     </style>
     
     <style name="ButtonCircleColor.Yellow">
         <item name="android:id">@id/btn_color_yellow</item>
-        <item name="android:tint">@color/dark_yellow</item>
+        <item name="android:tint">@color/yellow</item>
         <item name="android:contentDescription">@string/color_yellow</item>
     </style>
     
     <style name="ButtonCircleColor.Green">
         <item name="android:id">@id/btn_color_green</item>
-        <item name="android:tint">@color/dark_green</item>
+        <item name="android:tint">@color/green</item>
         <item name="android:contentDescription">@string/color_green</item>
     </style>
     
     <style name="ButtonCircleColor.Blue">
         <item name="android:id">@id/btn_color_blue</item>
-        <item name="android:tint">@color/dark_blue</item>
+        <item name="android:tint">@color/blue</item>
         <item name="android:contentDescription">@string/color_blue</item>
     </style>
     
     <style name="ButtonCircleColor.Purple">
         <item name="android:id">@id/btn_color_purple</item>
-        <item name="android:tint">@color/dark_purple</item>
+        <item name="android:tint">@color/purple</item>
         <item name="android:contentDescription">@string/color_purple</item>
     </style>
     
@@ -148,5 +177,12 @@
         <item name="android:clipToPadding">false</item>
         <item name="android:clipChildren">false</item>
     </style>
-
+    
+    <!-- SPINNER -->
+    <style name="Spinner" parent="Text.Medium.Bold">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:popupBackground">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    
 </resources>

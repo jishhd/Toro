@@ -7,5 +7,11 @@
     <string name="color_green">Green</string>
     <string name="color_blue">Blue</string>
     <string name="color_purple">Purple</string>
-    <string name="title_activity_edit_message">EditMessageActivity</string>
+    
+    <string name="filter_sent">Sent</string>
+    <string name="filter_received">Received</string>
+    <string name="filter_all">All</string>
+    
+    <string name="text_to">To</string>
+    <string name="text_from">From</string>
 </resources>
