@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Toro</string>
+    
+    <string name="color_red">Red</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_green">Green</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_purple">Purple</string>
+    <string name="title_activity_edit_message">EditMessageActivity</string>
+</resources>

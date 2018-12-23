@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id"
+          name="btn_color_red"/>
+    <item type="id"
+          name="btn_color_orange"/>
+    <item type="id"
+          name="btn_color_yellow"/>
+    <item type="id"
+          name="btn_color_green"/>
+    <item type="id"
+          name="btn_color_blue"/>
+    <item type="id"
+          name="btn_color_purple"/>
+</resources>

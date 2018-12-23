@@ -1,0 +1,152 @@
+<resources>
+    
+    <!-- Base application theme. -->
+    <style name="AppTheme"
+           parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    
+    
+    <!-- TEXT -->
+    
+    <style name="Text">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/txt_small</item>
+    </style>
+    
+    <style name="Text.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="Text.Small">
+        <item name="android:textSize">@dimen/txt_xsmall</item>
+    </style>
+    
+    <style name="Text.Small.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="Text.Medium">
+        <item name="android:textSize">@dimen/txt_medium</item>
+    </style>
+    
+    <style name="Text.Medium.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="Text.Large">
+        <item name="android:textSize">@dimen/txt_large</item>
+    </style>
+    
+    <style name="Text.Large.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    
+    <!-- COLORS -->
+    
+    <style name="ButtonCircleColor">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/xxlarge</item>
+        <item name="android:layout_margin">@dimen/xtiny</item>
+        <item name="android:onClick">selectColor</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:src">@drawable/checkbox_blank_circle</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Red">
+        <item name="android:id">@id/btn_color_red</item>
+        <item name="android:tint">@color/dark_red</item>
+        <item name="android:contentDescription">@string/color_red</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Orange">
+        <item name="android:id">@id/btn_color_orange</item>
+        <item name="android:tint">@color/dark_orange</item>
+        <item name="android:contentDescription">@string/color_orange</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Yellow">
+        <item name="android:id">@id/btn_color_yellow</item>
+        <item name="android:tint">@color/dark_yellow</item>
+        <item name="android:contentDescription">@string/color_yellow</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Green">
+        <item name="android:id">@id/btn_color_green</item>
+        <item name="android:tint">@color/dark_green</item>
+        <item name="android:contentDescription">@string/color_green</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Blue">
+        <item name="android:id">@id/btn_color_blue</item>
+        <item name="android:tint">@color/dark_blue</item>
+        <item name="android:contentDescription">@string/color_blue</item>
+    </style>
+    
+    <style name="ButtonCircleColor.Purple">
+        <item name="android:id">@id/btn_color_purple</item>
+        <item name="android:tint">@color/dark_purple</item>
+        <item name="android:contentDescription">@string/color_purple</item>
+    </style>
+    
+    
+    <!-- CARDS -->
+    
+    <style name="Card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/xsmall</item>
+        <item name="contentPadding">@dimen/xsmall</item>
+        <item name="android:elevation">@dimen/xxsmall</item>
+        <item name="cardElevation">@dimen/xxsmall</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:clipChildren">false</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+    
+    <style name="Card.Red">
+        <item name="cardBackgroundColor">@color/red</item>
+    </style>
+    
+    <style name="Card.Orange">
+        <item name="cardBackgroundColor">@color/orange</item>
+    </style>
+    
+    <style name="Card.Yellow">
+        <item name="cardBackgroundColor">@color/yellow</item>
+    </style>
+    
+    <style name="Card.Green">
+        <item name="cardBackgroundColor">@color/green</item>
+    </style>
+    
+    <style name="Card.Blue">
+        <item name="cardBackgroundColor">@color/blue</item>
+    </style>
+    
+    <style name="Card.Purple">
+        <item name="cardBackgroundColor">@color/purple</item>
+    </style>
+    
+    
+    <!-- RECYCLER -->
+    <style name="Recycler">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
+        <item name="android:paddingTop">@dimen/xxsmall</item>
+        <item name="android:paddingStart">@dimen/xxsmall</item>
+        <item name="android:paddingEnd">@dimen/xxsmall</item>
+        <item name="android:paddingBottom">@dimen/xxsmall</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:clipChildren">false</item>
+    </style>
+
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar">56dp</dimen>
+    <dimen name="touch">48dp</dimen>
+    <dimen name="xxlarge">40dp</dimen>
+    <dimen name="xlarge">32dp</dimen>
+    <dimen name="large">24dp</dimen>
+    <dimen name="medium">20dp</dimen>
+    <dimen name="small">16dp</dimen>
+    <dimen name="xsmall">12dp</dimen>
+    <dimen name="xxsmall">8dp</dimen>
+    <dimen name="tiny">4dp</dimen>
+    <dimen name="xtiny">2dp</dimen>
+    
+    <dimen name="txt_xlarge">32sp</dimen>
+    <dimen name="txt_large">24sp</dimen>
+    <dimen name="txt_medium">20sp</dimen>
+    <dimen name="txt_small">16sp</dimen>
+    <dimen name="txt_xsmall">12sp</dimen>
+    <dimen name="txt_xxsmall">10sp</dimen>
+</resources>

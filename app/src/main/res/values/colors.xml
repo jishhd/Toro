@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorAccent">@color/black</color>
+    
+    
+    <color name="white">@color/material_white</color>
+    <color name="black">@color/material_black</color>
+    <color name="black_overlay">#66000000</color>
+    
+    <color name="red">@color/material_red200</color>
+    <color name="orange">@color/material_orange200</color>
+    <color name="yellow">@color/material_yellow200</color>
+    <color name="green">@color/material_green200</color>
+    <color name="blue">@color/material_blue200</color>
+    <color name="purple">@color/material_purple200</color>
+    
+    <color name="dark_red">@color/material_red700</color>
+    <color name="dark_orange">@color/material_orange700</color>
+    <color name="dark_yellow">@color/material_yellow700</color>
+    <color name="dark_green">@color/material_green700</color>
+    <color name="dark_blue">@color/material_blue700</color>
+    <color name="dark_purple">@color/material_purple700</color>
+    
+    <color name="accent_red">@color/material_redA700</color>
+    <color name="accent_orange">@color/material_orangeA700</color>
+    <color name="accent_yellow">@color/material_yellowA700</color>
+    <color name="accent_green">@color/material_greenA700</color>
+    <color name="accent_blue">@color/material_blueA700</color>
+    <color name="accent_purple">@color/material_purpleA700</color>
+</resources>
