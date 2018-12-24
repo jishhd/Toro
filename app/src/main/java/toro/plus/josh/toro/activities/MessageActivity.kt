@@ -61,9 +61,8 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
 
         if (!isNfcSupported) {
             Toast.makeText(this, "Nfc is not supported on this device", Toast.LENGTH_SHORT).show()
-            finish()
         }
-        if (!nfcAdapter!!.isEnabled) {
+        if (!(nfcAdapter?.isEnabled ?: false)) {
             Toast.makeText(this, "NFC disabled on this device. Turn on to proceed", Toast.LENGTH_SHORT).show()
         }
 
@@ -273,11 +272,11 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
             throw RuntimeException("Check your MIME type")
         }
 
-        adapter!!.enableForegroundDispatch(activity, pendingIntent, filters, techList)
+        adapter?.enableForegroundDispatch(activity, pendingIntent, filters, techList)
     }
 
     fun disableForegroundDispatch(activity: AppCompatActivity, adapter: NfcAdapter?) {
-        adapter!!.disableForegroundDispatch(activity)
+        adapter?.disableForegroundDispatch(activity)
     }
 
     override fun signalResult() {
