@@ -20,5 +20,8 @@
     <dimen name="txt_xsmall">12sp</dimen>
     <dimen name="txt_xxsmall">10sp</dimen>
     
-    <dimen name="btn_width">200dp</dimen>
+    <dimen name="btn_width">180dp</dimen>
+    
+    
+    <integer name="anim_duration">200</integer>
 </resources>

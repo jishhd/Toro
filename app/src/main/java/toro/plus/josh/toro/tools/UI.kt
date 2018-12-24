@@ -4,16 +4,19 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.ViewCompat
 import com.google.android.material.textfield.TextInputLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import toro.plus.josh.toro.R
+
 
 class UI {
     companion object {
-        const val COLOR_ANIM_MS = 250L
-
         @JvmStatic
         fun showDeleteDialog(delete: Runnable) {
             delete.run()
@@ -22,7 +25,7 @@ class UI {
         @JvmStatic
         fun updateBackgroundColor(context: Context, view: View?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
-            valueAnimator.duration = UI.COLOR_ANIM_MS
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener {
                 view?.setBackgroundColor(valueAnimator.animatedValue as Int)
@@ -33,7 +36,7 @@ class UI {
         @JvmStatic
         fun updateHighlightColor(context: Context, view: AppCompatEditText?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
-            valueAnimator.duration = UI.COLOR_ANIM_MS
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener {
                 view?.highlightColor = valueAnimator.animatedValue as Int
@@ -44,7 +47,7 @@ class UI {
         @JvmStatic
         fun updateBoxStrokeColor(context: Context, view: TextInputLayout?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
-            valueAnimator.duration = UI.COLOR_ANIM_MS
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener {
                 view?.boxStrokeColor = valueAnimator.animatedValue as Int
@@ -55,7 +58,7 @@ class UI {
         @JvmStatic
         fun updateTextColor(context: Context, view: TextView?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
-            valueAnimator.duration = UI.COLOR_ANIM_MS
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener {
                 view?.setTextColor(valueAnimator.animatedValue as Int)
@@ -66,12 +69,22 @@ class UI {
         @JvmStatic
         fun updateTintListColor(context: Context, view: View?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
-            valueAnimator.duration = UI.COLOR_ANIM_MS
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener { if (view != null) {
                 ViewCompat.setBackgroundTintList(view, ColorStateList.valueOf(valueAnimator.animatedValue as Int))
             }}
             valueAnimator.start()
+        }
+
+        @JvmStatic
+        fun runLayoutAnimation(recyclerView: RecyclerView) {
+            val context = recyclerView.context
+            val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter?.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
         }
     }
 }

@@ -32,6 +32,12 @@ class ToroActivity : AppCompatActivity() {
             field = filter
             updateFilter(filter)
         }
+    var color: Color = Storage.get(Data.LAST_USED_COLOR) as Color
+        set(color) {
+            updateUiColors(color)
+            field = color
+            Storage.put(Data.LAST_USED_COLOR, color)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +49,10 @@ class ToroActivity : AppCompatActivity() {
         messagesSent.addAll((Storage.get(Data.SENT_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
         messagesReceived.addAll((Storage.get(Data.RECEIVED_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
 
-        btn_filter?.setOnClickListener {
-            rotateFilter()
-        }
+        UI.runLayoutAnimation(message_recycler)
 
-        fab?.setOnClickListener {
-            goToMessage(Message())
-        }
+        btn_filter?.setOnClickListener { rotateFilter() }
+        fab?.setOnClickListener { goToMessage(Message()) }
     }
 
     // UTLITIES
@@ -102,9 +105,17 @@ class ToroActivity : AppCompatActivity() {
                 adapter.notifyItemRangeInserted(0, messagesReceived.size)
             }
         }
-        adapter.notifyDataSetChanged()
+
+        UI.runLayoutAnimation(message_recycler)
     }
 
+    private fun updateUiColors(newColor: Color) {
+        UI.updateBackgroundColor(this@ToroActivity, toro_layout, color.colorPale, newColor.colorPale)
+        // bottom bar and fab
+        UI.updateTintListColor(this@ToroActivity, bottom_bar, color.color, newColor.color)
+        UI.updateTintListColor(this@ToroActivity, fab, color.colorAccent, newColor.colorAccent)
+        UI.updateTintListColor(this@ToroActivity, btn_filter, color.colorLight, newColor.colorLight)
+    }
 
     // INNER CLASSES
 
@@ -175,6 +186,9 @@ class ToroActivity : AppCompatActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
+
+        color = Storage.get(Data.LAST_USED_COLOR) as Color
+
         when (filter) {
             Filter.SENT -> {
                 messagesSent.clear()

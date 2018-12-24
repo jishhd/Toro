@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ToroActivity"
+    android:id="@+id/toro_layout"
     android:background="@color/white"
     android:animateLayoutChanges="true">
     
@@ -18,21 +19,23 @@
             android:id="@+id/message_recycler"
             style="@style/Recycler"
             tools:itemCount="10"
-            tools:listitem="@layout/message_preview"/>
+            tools:listitem="@layout/message_preview"
+            />
         
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@id/bottom_bar"
-            style="@style/BottomBar.End">
+            style="@style/BottomBar.End"
+            android:animateLayoutChanges="true">
             
            <LinearLayout
                android:layout_width="wrap_content"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
     
                <com.google.android.material.button.MaterialButton
                    style="@style/Filter"
                    android:id="@+id/btn_filter"
-                   android:text="@string/filter_received"
-                   />
+                   android:text="@string/filter_received"/>
                
            </LinearLayout>
             

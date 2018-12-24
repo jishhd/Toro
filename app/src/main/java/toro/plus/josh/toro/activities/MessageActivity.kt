@@ -37,16 +37,21 @@ class MessageActivity : AppCompatActivity() {
         set(color) {
             updateUiColors(color)
             field = color
-            Storage.put(Data.LAST_USED_COLOR, color)
+
+            if (::message.isInitialized) {
+                if (message.editable) {
+                    Storage.put(Data.LAST_USED_COLOR, color)
+                }
+            }
         }
 
     fun selectColor(v: View?) {
         when (v?.id) {
-            R.id.btn_color_red -> color = Color.RED
+            R.id.btn_color_red    -> color = Color.RED
             R.id.btn_color_orange -> color = Color.ORANGE
             R.id.btn_color_yellow -> color = Color.YELLOW
-            R.id.btn_color_green -> color = Color.GREEN
-            R.id.btn_color_blue -> color = Color.BLUE
+            R.id.btn_color_green  -> color = Color.GREEN
+            R.id.btn_color_blue   -> color = Color.BLUE
             R.id.btn_color_purple -> color = Color.PURPLE
         }
     }
