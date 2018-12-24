@@ -1,10 +1,8 @@
 package toro.plus.josh.toro.activities
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import kotlinx.android.synthetic.main.activity_message.*
 import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
@@ -12,31 +10,11 @@ import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
 import toro.plus.josh.toro.models.objects.Message
 import toro.plus.josh.toro.tools.Storage
+import toro.plus.josh.toro.tools.UI
+
 
 class MessageActivity : AppCompatActivity() {
     lateinit var message: Message
-    var color: Color = Storage.get(Data.LAST_USED_COLOR) as Color? ?: Color.RED
-        set(color) {
-            constraint_layout?.background = getDrawable(color.colorLight)
-            message_date?.setTextColor(getColor(color.color))
-
-            message_recipient?.setTextColor(getColor(color.colorDark))
-            text_to?.background = getDrawable(color.colorLight)
-            text_to?.boxStrokeColor = getColor(color.colorDark)
-
-            message_body?.setTextColor(getColor(color.colorDark))
-            text_body?.background = getDrawable(color.colorLight)
-            text_body?.boxStrokeColor = getColor(color.colorDark)
-
-            message_sender?.setTextColor(getColor(color.colorDark))
-            text_from?.background = getDrawable(color.colorLight)
-            text_from?.boxStrokeColor = getColor(color.colorDark)
-
-            ViewCompat.setBackgroundTintList(bottom_bar, ColorStateList.valueOf(getColor(color.color)))
-            ViewCompat.setBackgroundTintList(fab, ColorStateList.valueOf(getColor(color.colorAccent)))
-
-            Storage.put(Data.LAST_USED_COLOR.key, color)
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +29,16 @@ class MessageActivity : AppCompatActivity() {
 
         fab?.setOnClickListener { save() }
 
+        editable(message.editable)
         color = message.color
     }
+
+    var color: Color = Storage.get(Data.LAST_USED_COLOR) as Color
+        set(color) {
+            updateUiColors(color)
+            field = color
+            Storage.put(Data.LAST_USED_COLOR, color)
+        }
 
     fun selectColor(v: View?) {
         when (v?.id) {
@@ -65,6 +51,52 @@ class MessageActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateUiColors(newColor: Color) {
+        UI.updateBackgroundColor(this@MessageActivity, constraint_layout, color.colorLight, newColor.colorLight)
+        UI.updateTextColor(this@MessageActivity, message_date, color.color, newColor.color)
+
+        UI.updateTextColor(this@MessageActivity, message_recipient, color.colorDark, newColor.colorDark)
+        UI.updateHighlightColor(this@MessageActivity, message_recipient, color.color, newColor.color)
+        UI.updateBackgroundColor(this@MessageActivity, text_to, color.colorPale, newColor.colorPale)
+        UI.updateBoxStrokeColor(this@MessageActivity, text_to, color.colorDark, newColor.colorDark)
+
+        UI.updateTextColor(this@MessageActivity, message_body, color.colorDark, newColor.colorDark)
+        UI.updateHighlightColor(this@MessageActivity, message_body, color.color, newColor.color)
+        UI.updateBackgroundColor(this@MessageActivity, text_body, color.colorPale, newColor.colorPale)
+        UI.updateBoxStrokeColor(this@MessageActivity, text_body, color.colorDark, newColor.colorDark)
+
+        UI.updateTextColor(this@MessageActivity, message_sender, color.colorDark, newColor.colorDark)
+        UI.updateHighlightColor(this@MessageActivity, message_sender, color.color, newColor.color)
+        UI.updateBackgroundColor(this@MessageActivity, text_from, color.colorPale, newColor.colorPale)
+        UI.updateBoxStrokeColor(this@MessageActivity, text_from, color.colorDark, newColor.colorDark)
+
+        UI.updateTintListColor(this@MessageActivity, bottom_bar, color.color, newColor.color)
+        UI.updateTintListColor(this@MessageActivity, fab, color.colorAccent, newColor.colorAccent)
+    }
+
+    fun editable(editable: Boolean) {
+        // hide bottom bar
+        if (editable) {
+            fab?.show()
+            bottom_bar?.visibility = View.VISIBLE
+        } else {
+            fab?.hide()
+            bottom_bar?.visibility = View.GONE
+        }
+        // text fields
+        message_recipient?.isEnabled = editable
+        message_body?.isEnabled = editable
+        message_sender?.isEnabled = editable
+        // buttons
+        btn_color_red?.isEnabled = editable
+        btn_color_orange?.isEnabled = editable
+        btn_color_yellow?.isEnabled = editable
+        btn_color_green?.isEnabled = editable
+        btn_color_blue?.isEnabled = editable
+        btn_color_purple?.isEnabled = editable
+        fab?.isEnabled = editable
+    }
+
     fun save() {
         val message = Message(
             sender = message_sender?.text.toString(),
@@ -74,9 +106,9 @@ class MessageActivity : AppCompatActivity() {
             color = color
         )
 
-        Storage.put(Data.NAME.key, message.sender)
-        Storage.put(Data.MESSAGES.key, message)
-        Storage.put(Data.LAST_USED_COLOR.key, message.color)
+        Storage.put(Data.NAME, message.sender)
+        Storage.add(Data.MESSAGES, message)
+        Storage.put(Data.LAST_USED_COLOR, message.color)
 
         setResult(RESULT_OK)
         finish()

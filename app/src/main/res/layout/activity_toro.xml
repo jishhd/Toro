@@ -6,39 +6,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ToroActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:animateLayoutChanges="true">
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
         
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/message_recycler"
             style="@style/Recycler"
             tools:itemCount="10"
-            tools:listitem="@layout/card_message_preview"/>
+            tools:listitem="@layout/message_preview"/>
         
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:navigationIcon="@null"
-            app:fabAlignmentMode="end"
-            app:fabCradleMargin="@dimen/xsmall"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabCradleRoundedCornerRadius="@dimen/xsmall"
-            app:hideOnScroll="true">
-            
+            android:id="@id/bottom_bar"
+            style="@style/BottomBar.End">
            <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content">
     
-               <Spinner
-                   style="@style/Spinner"
-                   android:layout_width="wrap_content"
+               <com.google.android.material.button.MaterialButton
+                   style="@style/Filter"
+                   android:id="@+id/btn_filter"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   tools:listitem="@layout/spinner"
+                   android:text="@string/filter_sent"
+                   app:backgroundTint="@color/white"
                    />
                
            </LinearLayout>

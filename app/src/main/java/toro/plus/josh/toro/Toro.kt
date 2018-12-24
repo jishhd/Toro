@@ -11,7 +11,7 @@ class Toro() : Application() {
         val TAG = Toro::class.java.name
 
         // constants
-        const val DATE_STRING = "dd/MM/yyyy"
+        const val DATE_STRING = "MM/dd/yyyy"
 
         // request codes
         const val REQUEST_MESSAGE = 0

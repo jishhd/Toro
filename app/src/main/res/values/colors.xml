@@ -9,12 +9,19 @@
     <color name="black">@color/material_black</color>
     <color name="black_overlay">#66000000</color>
     
-    <color name="light_red">@color/material_red200</color>
-    <color name="light_orange">@color/material_orange200</color>
-    <color name="light_yellow">@color/material_yellow200</color>
-    <color name="light_green">@color/material_green200</color>
-    <color name="light_blue">@color/material_blue200</color>
-    <color name="light_purple">@color/material_purple200</color>
+    <color name="pale_red">@color/md_red100</color>
+    <color name="pale_orange">@color/md_orange100</color>
+    <color name="pale_yellow">@color/md_yellow100</color>
+    <color name="pale_green">@color/md_green100</color>
+    <color name="pale_blue">@color/md_blue100</color>
+    <color name="pale_purple">@color/md_purple100</color>
+    
+    <color name="light_red">@color/md_red200</color>
+    <color name="light_orange">@color/md_orange200</color>
+    <color name="light_yellow">@color/md_yellow200</color>
+    <color name="light_green">@color/md_green200</color>
+    <color name="light_blue">@color/md_blue200</color>
+    <color name="light_purple">@color/md_purple200</color>
     
     <color name="red">@color/md_red700</color>
     <color name="orange">@color/md_orange700</color>
@@ -25,14 +32,14 @@
     
     <color name="dark_red">@color/md_red900</color>
     <color name="dark_orange">@color/md_deeporange900</color>
-    <color name="dark_yellow">@color/md_brown900</color>
+    <color name="dark_yellow">@color/md_brown600</color>
     <color name="dark_green">@color/md_green900</color>
     <color name="dark_blue">@color/md_blue900</color>
     <color name="dark_purple">@color/md_purple900</color>
     
     <color name="accent_red">@color/md_redA400</color>
     <color name="accent_orange">@color/md_orangeA400</color>
-    <color name="accent_yellow">@color/md_yellowA400</color>
+    <color name="accent_yellow">@color/md_amberA700</color>
     <color name="accent_green">@color/md_greenA400</color>
     <color name="accent_blue">@color/md_blueA400</color>
     <color name="accent_purple">@color/md_purpleA400</color>

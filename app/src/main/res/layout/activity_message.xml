@@ -6,12 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/constraint_layout"
-    tools:context=".activities.ToroActivity">
+    tools:context=".activities.ToroActivity"
+    android:animateLayoutChanges="true">
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/message_coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
         
         <ScrollView
             android:layout_width="match_parent"
@@ -46,14 +48,16 @@
                 </com.google.android.material.textfield.TextInputLayout>
     
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Message.Body"
-                    android:id="@+id/text_body">
+                    style="@style/Body"
+                    android:id="@+id/text_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatEditText
                         style="@style/Text.Medium.Bold"
                         android:id="@+id/message_body"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@tools:sample/lorem"
+                        android:text="Lorem ipsum sic dolor at met."
                         android:minLines="8"
                         android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
                         android:gravity="start"/>
@@ -93,17 +97,29 @@
                 android:orientation="horizontal"
                 android:background="@null">
                 
-                <ImageButton style="@style/ButtonCircleColor.Red"/>
+                <ImageButton
+                    android:id="@id/btn_color_red"
+                    style="@style/ButtonCircleColor.Red"/>
                 
-                <ImageButton style="@style/ButtonCircleColor.Orange"/>
+                <ImageButton
+                    android:id="@id/btn_color_orange"
+                    style="@style/ButtonCircleColor.Orange"/>
                 
-                <ImageButton style="@style/ButtonCircleColor.Yellow"/>
+                <ImageButton
+                    android:id="@id/btn_color_yellow"
+                    style="@style/ButtonCircleColor.Yellow"/>
                 
-                <ImageButton style="@style/ButtonCircleColor.Green"/>
+                <ImageButton
+                    android:id="@id/btn_color_green"
+                    style="@style/ButtonCircleColor.Green"/>
                 
-                <ImageButton style="@style/ButtonCircleColor.Blue"/>
+                <ImageButton
+                    android:id="@id/btn_color_blue"
+                    style="@style/ButtonCircleColor.Blue"/>
                 
-                <ImageButton style="@style/ButtonCircleColor.Purple"/>
+                <ImageButton
+                    android:id="@id/btn_color_purple"
+                    style="@style/ButtonCircleColor.Purple"/>
             
             </LinearLayout>
         

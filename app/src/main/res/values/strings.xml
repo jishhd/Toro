@@ -10,8 +10,14 @@
     
     <string name="filter_sent">Sent</string>
     <string name="filter_received">Received</string>
-    <string name="filter_all">All</string>
+    <string name="filter_all">All Messages</string>
     
     <string name="text_to">To</string>
     <string name="text_from">From</string>
+    
+    
+    <!-- tutorial -->
+    <string name="card_1_intro">Welcome to Toro!</string>
+    <string name="card_1_body">Write exclusive messages to friends and family, and send them with NFC. Change color themes, and tap send to activate!</string>
+    <string name="card_1_outro">Tap this card to get started.</string>
 </resources>
