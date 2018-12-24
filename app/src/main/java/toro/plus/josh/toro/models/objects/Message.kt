@@ -3,6 +3,7 @@ package toro.plus.josh.toro.models.objects
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import com.google.gson.Gson
 import toro.plus.josh.toro.BuildConfig
 import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
@@ -27,6 +28,9 @@ data class Message(
             override fun createFromParcel(source: Parcel): Message = Message(source)
             override fun newArray(size: Int): Array<Message?> = arrayOfNulls(size)
         }
+
+        @JvmStatic
+        fun fromJson(json: String): Message? = Gson().fromJson(json, Message::class.java) ?: null
 
         @JvmStatic
         fun getTutorialMessages(context: Context): ArrayList<Message> = arrayListOf(
@@ -79,11 +83,6 @@ data class Message(
                 editable = false
             )
         )
-
-        @JvmStatic
-        fun filter(messages: ArrayList<Message>, filter: Filter) {
-
-        }
     }
 
     constructor(source: Parcel) : this(

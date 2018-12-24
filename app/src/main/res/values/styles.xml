@@ -146,6 +146,7 @@
         <item name="android:backgroundTint">@color/black</item>
         <item name="fabCradleRoundedCornerRadius">@dimen/xsmall</item>
         <item name="hideOnScroll">true</item>
+        <item name="android:insetLeft">0dp</item>
     </style>
     
     <style name="BottomBar.Center">
@@ -198,7 +199,7 @@
     <!-- RECYCLER -->
     <style name="Recycler">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:paddingTop">@dimen/xxsmall</item>
         <item name="android:paddingStart">@dimen/xxsmall</item>

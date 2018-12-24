@@ -7,7 +7,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import com.google.android.material.textfield.TextInputLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -23,12 +25,28 @@ class UI {
         }
 
         @JvmStatic
+        fun pop(context: Context, text: String) {
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        }
+
+        @JvmStatic
         fun updateBackgroundColor(context: Context, view: View?, oldColor: Int, newColor: Int) {
             val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
             valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
             valueAnimator.interpolator = LinearInterpolator()
             valueAnimator.addUpdateListener {
                 view?.setBackgroundColor(valueAnimator.animatedValue as Int)
+            }
+            valueAnimator.start()
+        }
+
+        @JvmStatic
+        fun updateCardBackgroundColor(context: Context, view: CardView?, oldColor: Int, newColor: Int) {
+            val valueAnimator = ValueAnimator.ofArgb(context.getColor(oldColor), context.getColor(newColor))
+            valueAnimator.duration = context.resources.getInteger(R.integer.anim_duration).toLong()
+            valueAnimator.interpolator = LinearInterpolator()
+            valueAnimator.addUpdateListener {
+                view?.setCardBackgroundColor(valueAnimator.animatedValue as Int)
             }
             valueAnimator.start()
         }

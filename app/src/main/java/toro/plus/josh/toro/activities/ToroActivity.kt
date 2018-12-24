@@ -63,7 +63,7 @@ class ToroActivity : AppCompatActivity() {
         startActivityForResult(intent, Toro.REQUEST_MESSAGE)
     }
 
-    fun updatedMessages(): ArrayList<Message> = when (filter) {
+    fun updatedMessages(filter: Filter): ArrayList<Message> = when (filter) {
         Filter.SENT -> (Storage.get(Data.SENT_MESSAGES) as ArrayList<Message>?) ?: arrayListOf()
         Filter.RECEIVED -> (Storage.get(Data.RECEIVED_MESSAGES) as ArrayList<Message>?) ?: arrayListOf()
     }
@@ -75,14 +75,14 @@ class ToroActivity : AppCompatActivity() {
                     messagesSent.removeAt(position)
                     adapter.notifyItemRemoved(position)
                     Storage.put(Data.SENT_MESSAGES, messagesSent)
-                    Toast.makeText(this@ToroActivity, "Deleted $position", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ToroActivity, "Deleted", Toast.LENGTH_SHORT).show()
                 }
 
                 Filter.RECEIVED -> {
                     messagesReceived.removeAt(position)
                     adapter.notifyItemRemoved(position)
                     Storage.put(Data.RECEIVED_MESSAGES, messagesReceived)
-                    Toast.makeText(this@ToroActivity, "Deleted $position", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ToroActivity, "Deleted", Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -186,20 +186,12 @@ class ToroActivity : AppCompatActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
-
         color = Storage.get(Data.LAST_USED_COLOR) as Color
-
-        when (filter) {
-            Filter.SENT -> {
-                messagesSent.clear()
-                messagesSent.addAll(updatedMessages())
-            }
-            Filter.RECEIVED -> {
-                messagesReceived.clear()
-                messagesReceived.addAll(updatedMessages())
-            }
-        }
-        adapter.notifyDataSetChanged()
+        messagesSent.clear()
+        messagesSent.addAll(updatedMessages(Filter.SENT))
+        messagesReceived.clear()
+        messagesReceived.addAll(updatedMessages(Filter.RECEIVED))
+        UI.runLayoutAnimation(message_recycler)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

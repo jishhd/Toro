@@ -12,6 +12,7 @@ class Toro() : Application() {
 
         // constants
         const val DATE_STRING = "MM/dd/yyyy"
+        const val MIME_APPLICATION_JSON = "application/json"
 
         // request codes
         const val REQUEST_MESSAGE = 0

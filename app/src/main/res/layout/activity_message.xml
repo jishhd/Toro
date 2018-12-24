@@ -34,47 +34,65 @@
                     android:gravity="end"
                     android:layout_margin="@dimen/small"/>
                 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Recipient"
-                    android:id="@+id/text_to">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        style="@style/Text.Large.Bold"
-                        android:id="@+id/message_recipient"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="@tools:sample/full_names"
-                        android:inputType="textPersonName|textCapWords|textMultiLine"
-                        android:gravity="start"/>
-                </com.google.android.material.textfield.TextInputLayout>
-    
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Body"
-                    android:id="@+id/text_body"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_recipient"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        style="@style/Text.Medium.Bold"
-                        android:id="@+id/message_body"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="Lorem ipsum sic dolor et met."
-                        android:minLines="8"
-                        android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
-                        android:gravity="start"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/xxsmall">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Recipient"
+                        android:id="@+id/text_to">
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/Text.Large.Bold"
+                            android:id="@+id/message_recipient"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="@tools:sample/full_names"
+                            android:inputType="textPersonName|textCapWords|textMultiLine"
+                            android:gravity="start"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
     
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Sender"
-                    android:id="@+id/text_from">
-                    <androidx.appcompat.widget.AppCompatEditText
-                        style="@style/Text.Large.Bold"
-                        android:id="@+id/message_sender"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/xxsmall">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Body"
+                        android:id="@+id/text_body"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="@tools:sample/full_names"
-                        android:inputType="textPersonName|textCapWords|textMultiLine"
-                        android:gravity="end"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/Text.Medium.Bold"
+                            android:id="@+id/message_body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Lorem ipsum sic dolor et met."
+                            android:minLines="8"
+                            android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
+                            android:gravity="start"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
+    
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_sender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/xxsmall">
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Sender"
+                        android:id="@+id/text_from">
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/Text.Large.Bold"
+                            android:id="@+id/message_sender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="@tools:sample/full_names"
+                            android:inputType="textPersonName|textCapWords|textMultiLine"
+                            android:gravity="end"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
                 
             </LinearLayout>
             
@@ -137,7 +155,7 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"
+            android:src="@drawable/content_save"
             android:tint="@color/white"
             app:fabSize="normal"
             app:layout_anchor="@id/bottom_bar"/>
