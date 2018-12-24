@@ -52,24 +52,25 @@ class MessageActivity : AppCompatActivity() {
     }
 
     private fun updateUiColors(newColor: Color) {
+        // layout background and date
         UI.updateBackgroundColor(this@MessageActivity, constraint_layout, color.colorLight, newColor.colorLight)
         UI.updateTextColor(this@MessageActivity, message_date, color.color, newColor.color)
-
+        // recipient fields
         UI.updateTextColor(this@MessageActivity, message_recipient, color.colorDark, newColor.colorDark)
         UI.updateHighlightColor(this@MessageActivity, message_recipient, color.color, newColor.color)
         UI.updateBackgroundColor(this@MessageActivity, text_to, color.colorPale, newColor.colorPale)
         UI.updateBoxStrokeColor(this@MessageActivity, text_to, color.colorDark, newColor.colorDark)
-
+        // message body
         UI.updateTextColor(this@MessageActivity, message_body, color.colorDark, newColor.colorDark)
         UI.updateHighlightColor(this@MessageActivity, message_body, color.color, newColor.color)
         UI.updateBackgroundColor(this@MessageActivity, text_body, color.colorPale, newColor.colorPale)
         UI.updateBoxStrokeColor(this@MessageActivity, text_body, color.colorDark, newColor.colorDark)
-
+        // sender fields
         UI.updateTextColor(this@MessageActivity, message_sender, color.colorDark, newColor.colorDark)
         UI.updateHighlightColor(this@MessageActivity, message_sender, color.color, newColor.color)
         UI.updateBackgroundColor(this@MessageActivity, text_from, color.colorPale, newColor.colorPale)
         UI.updateBoxStrokeColor(this@MessageActivity, text_from, color.colorDark, newColor.colorDark)
-
+        // bottom bar and fab
         UI.updateTintListColor(this@MessageActivity, bottom_bar, color.color, newColor.color)
         UI.updateTintListColor(this@MessageActivity, fab, color.colorAccent, newColor.colorAccent)
     }
@@ -107,7 +108,7 @@ class MessageActivity : AppCompatActivity() {
         )
 
         Storage.put(Data.NAME, message.sender)
-        Storage.add(Data.MESSAGES, message)
+        Storage.add(Data.SENT_MESSAGES, message)
         Storage.put(Data.LAST_USED_COLOR, message.color)
 
         setResult(RESULT_OK)

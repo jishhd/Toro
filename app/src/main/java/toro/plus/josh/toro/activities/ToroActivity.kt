@@ -1,6 +1,5 @@
 package toro.plus.josh.toro.activities
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,14 +17,21 @@ import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
+import toro.plus.josh.toro.models.enums.Filter
 import toro.plus.josh.toro.models.objects.Message
 import toro.plus.josh.toro.tools.Storage
 import toro.plus.josh.toro.tools.UI
 
 class ToroActivity : AppCompatActivity() {
 
-    val messages = arrayListOf<Message>()
+    val messagesSent = arrayListOf<Message>()
+    val messagesReceived = arrayListOf<Message>()
     val adapter = MessageAdapter()
+    var filter = Filter.RECEIVED
+        set(filter) {
+            field = filter
+            updateFilter(filter)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +40,69 @@ class ToroActivity : AppCompatActivity() {
         message_recycler?.adapter = adapter
         message_recycler?.itemAnimator = DefaultItemAnimator()
 
-        messages.addAll((Storage.get(Data.MESSAGES) as ArrayList<Message>?)
-            ?: Message.getTutorialMessages(this@ToroActivity))
+        messagesSent.addAll((Storage.get(Data.SENT_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
+        messagesReceived.addAll((Storage.get(Data.RECEIVED_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
+
+        btn_filter?.setOnClickListener {
+            rotateFilter()
+        }
 
         fab?.setOnClickListener {
             goToMessage(Message())
         }
+    }
+
+    // UTLITIES
+
+    fun goToMessage(message: Message) {
+        val intent = Intent(this@ToroActivity, MessageActivity::class.java)
+        intent.putExtra(Toro.EXTRA_MESSAGE, message)
+        startActivityForResult(intent, Toro.REQUEST_MESSAGE)
+    }
+
+    fun updatedMessages(): ArrayList<Message> = when (filter) {
+        Filter.SENT -> (Storage.get(Data.SENT_MESSAGES) as ArrayList<Message>?) ?: arrayListOf()
+        Filter.RECEIVED -> (Storage.get(Data.RECEIVED_MESSAGES) as ArrayList<Message>?) ?: arrayListOf()
+    }
+
+    fun deleteMessageAt(position: Int) {
+        UI.showDeleteDialog(Runnable{
+            when (filter) {
+                Filter.SENT -> {
+                    messagesSent.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                    Storage.put(Data.SENT_MESSAGES, messagesSent)
+                    Toast.makeText(this@ToroActivity, "Deleted $position", Toast.LENGTH_SHORT).show()
+                }
+
+                Filter.RECEIVED -> {
+                    messagesReceived.removeAt(position)
+                    adapter.notifyItemRemoved(position)
+                    Storage.put(Data.RECEIVED_MESSAGES, messagesReceived)
+                    Toast.makeText(this@ToroActivity, "Deleted $position", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    fun rotateFilter() = when (filter) {
+        Filter.SENT -> filter = Filter.RECEIVED
+        Filter.RECEIVED -> filter = Filter.SENT
+    }
+
+    fun updateFilter(filter: Filter) {
+        btn_filter?.text = filter.title
+        when (filter) {
+            Filter.SENT -> {
+                adapter.notifyItemRangeRemoved(0, messagesReceived.size)
+                adapter.notifyItemRangeInserted(0, messagesSent.size)
+            }
+            Filter.RECEIVED -> {
+                adapter.notifyItemRangeRemoved(0, messagesSent.size)
+                adapter.notifyItemRangeInserted(0, messagesReceived.size)
+            }
+        }
+        adapter.notifyDataSetChanged()
     }
 
 
@@ -56,20 +119,16 @@ class ToroActivity : AppCompatActivity() {
             )
         }
 
-        fun update() {
-            notifyDataSetChanged()
+        override fun getItemCount(): Int = when (filter) {
+            Filter.SENT -> messagesSent.size
+            Filter.RECEIVED -> messagesReceived.size
         }
-
-        fun getContext(): Context = this@ToroActivity
-
-        fun deleteAt(position: Int) {
-
-        }
-
-        override fun getItemCount(): Int = messages.size
 
         override fun onBindViewHolder(holder: MessageHolder, position: Int) {
-            val message = messages[position]
+            val message = when (filter) {
+                Filter.SENT -> messagesSent[position]
+                Filter.RECEIVED -> messagesReceived[position]
+            }
 
             holder.from.text = message.sender
             holder.to.text = message.recipient
@@ -99,42 +158,45 @@ class ToroActivity : AppCompatActivity() {
                 card.setOnLongClickListener(this)
             }
 
-            override fun onClick(v: View?) = goToMessage(messages[adapterPosition])
+            override fun onClick(v: View?) = when (filter) {
+                Filter.SENT -> goToMessage(messagesSent[adapterPosition])
+                Filter.RECEIVED -> goToMessage(messagesReceived[adapterPosition])
+            }
 
             override fun onLongClick(v: View?): Boolean {
-                showDeleteDialog(adapterPosition)
+                deleteMessageAt(adapterPosition)
                 return true
             };
         }
     }
 
 
-    // UTLITIES
-
-    fun goToMessage(message: Message) {
-        val intent = Intent(this@ToroActivity, MessageActivity::class.java)
-        intent.putExtra(Toro.EXTRA_MESSAGE, message)
-        startActivityForResult(intent, Toro.REQUEST_MESSAGE)
-    }
-
-    fun updatedMessages(): ArrayList<Message> = (Storage.get(Data.MESSAGES) as ArrayList<Message>?)
-        ?: Message.getTutorialMessages(this@ToroActivity)
-
-    fun showDeleteDialog(position: Int) {
-        UI.showDeleteDialog(Runnable{
-            messages.removeAt(position)
-            adapter.notifyItemRemoved(position)
-            Storage.put(Data.MESSAGES, messages)
-            Toast.makeText(this@ToroActivity, "Deleted $position", Toast.LENGTH_SHORT).show()
-        })
-    }
-
     // OVERRIDES
 
     override fun onPostResume() {
         super.onPostResume()
-        messages.clear()
-        messages.addAll(updatedMessages())
-        adapter.update()
+        when (filter) {
+            Filter.SENT -> {
+                messagesSent.clear()
+                messagesSent.addAll(updatedMessages())
+            }
+            Filter.RECEIVED -> {
+                messagesReceived.clear()
+                messagesReceived.addAll(updatedMessages())
+            }
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            Toro.REQUEST_MESSAGE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        filter = Filter.SENT
+                    }
+                }
+            }
+        }
     }
 }

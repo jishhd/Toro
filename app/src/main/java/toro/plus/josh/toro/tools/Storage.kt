@@ -28,8 +28,12 @@ class Storage {
                 //TODO if needed
             }
 
-            if (!has(Data.MESSAGES)) {
-                put(Data.MESSAGES, Message.getTutorialMessages(context))
+            if (!has(Data.RECEIVED_MESSAGES)) {
+                put(Data.RECEIVED_MESSAGES, Message.getTutorialMessages(context))
+            }
+
+            if (!has(Data.SENT_MESSAGES)) {
+                //TODO if needed
             }
 
             if (!has(Data.LAST_USED_COLOR)) {
@@ -51,8 +55,8 @@ class Storage {
         @JvmStatic
         fun add(data: Data, value: Any) {
             when (data.key) {
-                Data.MESSAGES.key -> {
-                    val messages = gson.fromJson(get(data, ""), Data.MESSAGES.token) as ArrayList<Message>? ?: arrayListOf()
+                Data.SENT_MESSAGES.key, Data.RECEIVED_MESSAGES.key -> {
+                    val messages = gson.fromJson(get(data, ""), data.token) as ArrayList<Message>? ?: arrayListOf()
                     messages.add(0, value as Message)
                     editor.putString(data.key, toJson(messages)).apply()
                 }
@@ -73,8 +77,8 @@ class Storage {
         @JvmStatic
         fun remove(data: Data, position: Int) {
             when (data.key) {
-                Data.MESSAGES.key -> {
-                    val messages = gson.fromJson(get(data, ""), Data.MESSAGES.token) as ArrayList<Message>? ?: arrayListOf()
+                Data.SENT_MESSAGES.key, Data.RECEIVED_MESSAGES.key -> {
+                    val messages = gson.fromJson(get(data, ""), data.token) as ArrayList<Message>? ?: arrayListOf()
                     if (messages.size > position) {
                         messages.removeAt(position)
                     }

@@ -10,8 +10,12 @@ enum class Data(val key: String, val token: Type) {
         "${Storage.SHARED_PREFERENCES}.name",
         object : TypeToken<String>() {}.type
     ),
-    MESSAGES(
-        "${Storage.SHARED_PREFERENCES}.messages",
+    SENT_MESSAGES(
+        "${Storage.SHARED_PREFERENCES}.sent_messages",
+        object : TypeToken<ArrayList<Message>>() {}.type
+    ),
+    RECEIVED_MESSAGES(
+        "${Storage.SHARED_PREFERENCES}.received_messages",
         object : TypeToken<ArrayList<Message>>() {}.type
     ),
     LAST_USED_COLOR(

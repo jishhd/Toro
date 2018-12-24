@@ -8,6 +8,7 @@ import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
+import toro.plus.josh.toro.models.enums.Filter
 import toro.plus.josh.toro.tools.Storage
 
 
@@ -78,6 +79,11 @@ data class Message(
                 editable = false
             )
         )
+
+        @JvmStatic
+        fun filter(messages: ArrayList<Message>, filter: Filter) {
+
+        }
     }
 
     constructor(source: Parcel) : this(
