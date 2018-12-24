@@ -114,7 +114,7 @@ class ToroActivity : AppCompatActivity() {
         // bottom bar and fab
         UI.updateTintListColor(this@ToroActivity, bottom_bar, color.color, newColor.color)
         UI.updateTintListColor(this@ToroActivity, fab, color.colorAccent, newColor.colorAccent)
-        UI.updateTintListColor(this@ToroActivity, btn_filter, color.colorLight, newColor.colorLight)
+        UI.updateTintListColor(this@ToroActivity, btn_filter, color.colorPale, newColor.colorPale)
     }
 
     // INNER CLASSES
@@ -154,7 +154,7 @@ class ToroActivity : AppCompatActivity() {
             holder.from.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
             holder.to.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
             holder.message.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
-            holder.date.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorAccent))
+            holder.date.setTextColor(ContextCompat.getColor(this@ToroActivity, color.colorDark))
         }
 
         inner class MessageHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {

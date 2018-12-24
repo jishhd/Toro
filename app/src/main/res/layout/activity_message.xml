@@ -43,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="@tools:sample/full_names"
-                        android:inputType="textPersonName|textCapWords"
+                        android:inputType="textPersonName|textCapWords|textMultiLine"
                         android:gravity="start"/>
                 </com.google.android.material.textfield.TextInputLayout>
     
@@ -57,7 +57,7 @@
                         android:id="@+id/message_body"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Lorem ipsum sic dolor at met."
+                        tools:text="Lorem ipsum sic dolor et met."
                         android:minLines="8"
                         android:inputType="textAutoComplete|textAutoCorrect|textCapSentences|textMultiLine"
                         android:gravity="start"/>
@@ -72,7 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="@tools:sample/full_names"
-                        android:inputType="textPersonName|textCapWords"
+                        android:inputType="textPersonName|textCapWords|textMultiLine"
                         android:gravity="end"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 
@@ -91,37 +91,45 @@
             app:backgroundTint="@color/colorPrimary"
             app:fabCradleRoundedCornerRadius="@dimen/xsmall">
             
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@null">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/bigly">
+    
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:background="@null"
+                    android:gravity="center">
+        
+                    <ImageButton
+                        android:id="@id/btn_color_red"
+                        style="@style/ButtonCircleColor.Red"/>
+        
+                    <ImageButton
+                        android:id="@id/btn_color_orange"
+                        style="@style/ButtonCircleColor.Orange"/>
+        
+                    <ImageButton
+                        android:id="@id/btn_color_yellow"
+                        style="@style/ButtonCircleColor.Yellow"/>
+        
+                    <ImageButton
+                        android:id="@id/btn_color_green"
+                        style="@style/ButtonCircleColor.Green"/>
+        
+                    <ImageButton
+                        android:id="@id/btn_color_blue"
+                        style="@style/ButtonCircleColor.Blue"/>
+        
+                    <ImageButton
+                        android:id="@id/btn_color_purple"
+                        style="@style/ButtonCircleColor.Purple"/>
+    
+                </LinearLayout>
                 
-                <ImageButton
-                    android:id="@id/btn_color_red"
-                    style="@style/ButtonCircleColor.Red"/>
-                
-                <ImageButton
-                    android:id="@id/btn_color_orange"
-                    style="@style/ButtonCircleColor.Orange"/>
-                
-                <ImageButton
-                    android:id="@id/btn_color_yellow"
-                    style="@style/ButtonCircleColor.Yellow"/>
-                
-                <ImageButton
-                    android:id="@id/btn_color_green"
-                    style="@style/ButtonCircleColor.Green"/>
-                
-                <ImageButton
-                    android:id="@id/btn_color_blue"
-                    style="@style/ButtonCircleColor.Blue"/>
-                
-                <ImageButton
-                    android:id="@id/btn_color_purple"
-                    style="@style/ButtonCircleColor.Purple"/>
-            
-            </LinearLayout>
+            </HorizontalScrollView>
         
         </com.google.android.material.bottomappbar.BottomAppBar>
         

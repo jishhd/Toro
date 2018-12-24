@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="bigly">96dp</dimen>
     <dimen name="toolbar_padding">72dp</dimen>
     <dimen name="toolbar">56dp</dimen>
     <dimen name="touch">48dp</dimen>

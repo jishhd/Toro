@@ -46,7 +46,7 @@
     </style>
     
     <style name="Filter" parent="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon">
-        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/txt_medium</item>
         <item name="android:layout_margin">@dimen/xxsmall</item>

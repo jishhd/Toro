@@ -59,7 +59,7 @@ class MessageActivity : AppCompatActivity() {
     private fun updateUiColors(newColor: Color) {
         // layout background and date
         UI.updateBackgroundColor(this@MessageActivity, constraint_layout, color.colorLight, newColor.colorLight)
-        UI.updateTextColor(this@MessageActivity, message_date, color.color, newColor.color)
+        UI.updateTextColor(this@MessageActivity, message_date, color.colorDark, newColor.colorDark)
         // recipient fields
         UI.updateTextColor(this@MessageActivity, message_recipient, color.colorDark, newColor.colorDark)
         UI.updateHighlightColor(this@MessageActivity, message_recipient, color.color, newColor.color)
