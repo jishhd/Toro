@@ -12,6 +12,9 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
 import kotlinx.android.synthetic.main.activity_toro.*
 import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
@@ -38,6 +41,7 @@ class ToroActivity : AppCompatActivity() {
             field = color
             Storage.put(Data.LAST_USED_COLOR, color)
         }
+    private lateinit var referrerClient: InstallReferrerClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +57,49 @@ class ToroActivity : AppCompatActivity() {
 
         btn_filter?.setOnClickListener { rotateFilter() }
         fab?.setOnClickListener { goToMessage(Message()) }
+
+        if (!(Storage.has(Data.LAUNCHED))) {
+            initInstallReferrer()
+        }
+        Storage.put(Data.LAUNCHED, true)
     }
 
     // UTLITIES
+
+    fun initInstallReferrer() {
+        referrerClient = InstallReferrerClient.newBuilder(this).build()
+        referrerClient.startConnection(object : InstallReferrerStateListener {
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+                        // Connection established
+                        val response: ReferrerDetails = referrerClient.installReferrer
+
+                        UI.pop(this@ToroActivity, response.installReferrer)
+
+                        referrerClient.endConnection()
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                        // API not available on the current Play Store app
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                        // Connection could not be established
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.DEVELOPER_ERROR -> {
+                        // A developer error?
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_DISCONNECTED -> {
+                        // Disconnected from service
+                    }
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+            }
+        })
+    }
 
     fun goToMessage(message: Message) {
         val intent = Intent(this@ToroActivity, MessageActivity::class.java)

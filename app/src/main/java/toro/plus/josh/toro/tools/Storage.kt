@@ -24,6 +24,10 @@ class Storage {
         }
 
         private fun setup(context: Context) {
+            if (!has(Data.LAUNCHED)) {
+                //TODO if needed
+            }
+
             if (!has(Data.NAME)) {
                 //TODO if needed
             }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="toro.plus.josh.toro">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="toro.plus.josh.toro">
     
     <uses-permission android:name="android.permission.NFC"/>
     <uses-feature android:name="android.hardware.nfc"/>
@@ -34,6 +35,15 @@
                 <data android:mimeType="application/json"/>
             </intent-filter>
         </activity>
+    
+        <!--<receiver-->
+            <!--android:name=".services.InstallReferrerReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.android.vending.INSTALL_REFERRER" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

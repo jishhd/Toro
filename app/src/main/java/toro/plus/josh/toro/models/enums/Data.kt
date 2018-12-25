@@ -6,6 +6,10 @@ import toro.plus.josh.toro.tools.Storage
 import java.lang.reflect.Type
 
 enum class Data(val key: String, val token: Type) {
+    LAUNCHED(
+        "${Storage.SHARED_PREFERENCES}.launched",
+        object : TypeToken<Boolean>() {}.type
+    ),
     NAME(
         "${Storage.SHARED_PREFERENCES}.name",
         object : TypeToken<String>() {}.type
