@@ -5,12 +5,12 @@ josh.plus/toro
 
 Customize personal messages that can only be shared by tapping your phones together.
 
-Open source.
-100% Kotlin.
-Android Beam.
-AndroidX.
-Vector graphics.
-Built with App Bundles.
+- Open source.
+- 100% Kotlin.
+- Android Beam.
+- AndroidX.
+- Vector graphics.
+- Built with App Bundles.
 
 Notes:
 - Tap phones on main screen to send them this app.
