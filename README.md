@@ -1,8 +1,8 @@
 # Toro
 Share exclusive, colorful messages over NFC.
 
-josh.plus/toro
-https://play.google.com/store/apps/details?id=toro.plus.josh.toro
+- https://josh.plus/toro
+- https://play.google.com/store/apps/details?id=toro.plus.josh.toro
 
 Customize personal messages that can only be shared by tapping your phones together.
 
