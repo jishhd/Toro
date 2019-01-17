@@ -3,6 +3,7 @@ package toro.plus.josh.toro.tools
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
 import toro.plus.josh.toro.models.objects.Message
@@ -16,14 +17,12 @@ class Storage {
         private val gson = Gson()
 
         @JvmStatic
-        fun init(context: Context) {
+        fun init() {
+            val context = Toro.instance.applicationContext
             db = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
             editor = db.edit()
 
-            setup(context)
-        }
-
-        private fun setup(context: Context) {
+            // initialize database
             if (!has(Data.LAUNCHED)) {
                 //TODO if needed
             }
@@ -60,7 +59,7 @@ class Storage {
         fun add(data: Data, value: Any) {
             when (data.key) {
                 Data.SENT_MESSAGES.key, Data.RECEIVED_MESSAGES.key -> {
-                    val messages = gson.fromJson(get(data, ""), data.token) as ArrayList<Message>? ?: arrayListOf()
+                    val messages = gson.fromJson(get(data, Toro.BLANK), data.token) as ArrayList<Message>? ?: arrayListOf()
                     messages.add(0, value as Message)
                     editor.putString(data.key, toJson(messages)).apply()
                 }
@@ -70,10 +69,10 @@ class Storage {
         }
 
         @JvmStatic
-        fun get(data: Data, defValue: String? = null): String = db.getString(data.key, defValue) ?: ""
+        fun get(data: Data, defValue: String? = null): String = db.getString(data.key, defValue) ?: Toro.BLANK
 
         @JvmStatic
-        fun get(data: Data): Any? = gson.fromJson(get(data, ""), data.token)
+        fun <T: Any> get(data: Data): T = gson.fromJson<T>(get(data, Toro.BLANK), data.token) ?: data.default as T
 
         @JvmStatic
         fun delete(key: String) = editor.remove(key).apply()
@@ -82,7 +81,7 @@ class Storage {
         fun remove(data: Data, position: Int) {
             when (data.key) {
                 Data.SENT_MESSAGES.key, Data.RECEIVED_MESSAGES.key -> {
-                    val messages = gson.fromJson(get(data, ""), data.token) as ArrayList<Message>? ?: arrayListOf()
+                    val messages = gson.fromJson(get(data, Toro.BLANK), data.token) as ArrayList<Message>? ?: arrayListOf()
                     if (messages.size > position) {
                         messages.removeAt(position)
                     }

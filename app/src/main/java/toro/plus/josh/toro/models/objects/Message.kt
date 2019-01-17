@@ -9,16 +9,15 @@ import toro.plus.josh.toro.R
 import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
-import toro.plus.josh.toro.models.enums.Filter
 import toro.plus.josh.toro.tools.Storage
 
 
 data class Message(
-    var recipient: String = "",
-    var message: String = "",
-    var sender: String = Storage.get(Data.NAME) as String? ?: "",
+    var recipient: String = Toro.BLANK,
+    var message: String = Toro.BLANK,
+    var sender: String = Storage.get(Data.NAME),
     var dateReceived: String = Toro.getDate(),
-    var color: Color = Storage.get(Data.LAST_USED_COLOR) as Color? ?: Color.RED,
+    var color: Color = Storage.get(Data.LAST_USED_COLOR),
     var editable: Boolean = true
 
 ) : Parcelable {
@@ -86,10 +85,10 @@ data class Message(
     }
 
     constructor(source: Parcel) : this(
-        source.readString() ?: "",
-        source.readString() ?: "",
-        source.readString() ?: "",
-        source.readString() ?: "",
+        source.readString() ?: Toro.BLANK,
+        source.readString() ?: Toro.BLANK,
+        source.readString() ?: Toro.BLANK,
+        source.readString() ?: Toro.BLANK,
         source.readSerializable() as Color? ?: Storage.get(Data.LAST_USED_COLOR) as Color? ?: Color.RED,
         if (source.readByte().equals(1.toByte())) {true} else {false}
     )

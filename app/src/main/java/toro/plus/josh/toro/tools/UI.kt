@@ -11,23 +11,42 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
-import com.google.android.material.textfield.TextInputLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputLayout
 import toro.plus.josh.toro.R
+import toro.plus.josh.toro.Toro
 
 
 class UI {
     companion object {
+
+        // MESSAGING
+
         @JvmStatic
         fun showDeleteDialog(delete: Runnable) {
             delete.run()
         }
 
         @JvmStatic
-        fun pop(context: Context, text: String) {
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        fun pop(text: String) {
+            Toast.makeText(Toro.instance.applicationContext, text, Toast.LENGTH_SHORT).show()
         }
+
+
+        // ANIMATIONS
+
+        @JvmStatic
+        fun animateLoad(recyclerView: RecyclerView) {
+            val context = recyclerView.context
+            val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter?.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
+        }
+
+
+        // COLORS
 
         @JvmStatic
         fun updateBackgroundColor(context: Context, view: View?, oldColor: Int, newColor: Int) {
@@ -93,16 +112,6 @@ class UI {
                 ViewCompat.setBackgroundTintList(view, ColorStateList.valueOf(valueAnimator.animatedValue as Int))
             }}
             valueAnimator.start()
-        }
-
-        @JvmStatic
-        fun runLayoutAnimation(recyclerView: RecyclerView) {
-            val context = recyclerView.context
-            val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
-
-            recyclerView.layoutAnimation = controller
-            recyclerView.adapter?.notifyDataSetChanged()
-            recyclerView.scheduleLayoutAnimation()
         }
     }
 }

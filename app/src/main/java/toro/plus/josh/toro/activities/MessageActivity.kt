@@ -7,8 +7,6 @@ import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_message.*
 import toro.plus.josh.toro.R
@@ -16,15 +14,15 @@ import toro.plus.josh.toro.Toro
 import toro.plus.josh.toro.models.enums.Color
 import toro.plus.josh.toro.models.enums.Data
 import toro.plus.josh.toro.models.objects.Message
-import toro.plus.josh.toro.tools.NfcSender
+import toro.plus.josh.toro.tools.Nfc
 import toro.plus.josh.toro.tools.Storage
 import toro.plus.josh.toro.tools.UI
 
-class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
+class MessageActivity : AppCompatActivity(), Nfc.Callback {
     private lateinit var message: Message
 
     private var nfcAdapter: NfcAdapter? = null
-    private var outcomingNfccallback: NfcSender? = null
+    private var nfcCallback: Nfc? = null
 
     // need to check NfcAdapter for nullability. Null means no NFC support on the device
     private val isNfcSupported: Boolean
@@ -33,7 +31,7 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
             return this.nfcAdapter != null
         }
 
-    override val outcomingMessage: Message
+    override val outgoingMessage: Message
         get() = Message(
             message_recipient.text.toString(),
             message_body.text.toString(),
@@ -47,7 +45,7 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
 
-        message = (intent?.getParcelableExtra(Toro.EXTRA_MESSAGE) as Message?) ?: Message()
+        message = (intent?.getParcelableExtra(Toro.EXTRA_OUTGOING_MESSAGE) as Message?) ?: Message()
 
         message_date?.setText(message.dateReceived)
         message_recipient?.setText(message.recipient)
@@ -60,16 +58,16 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
         color = message.color
 
         if (!isNfcSupported) {
-            Toast.makeText(this, "Nfc is not supported on this device", Toast.LENGTH_SHORT).show()
+            UI.pop("NFC unsupported")
         }
         if (!(nfcAdapter?.isEnabled ?: false)) {
-            Toast.makeText(this, "NFC disabled on this device. Turn on to proceed", Toast.LENGTH_SHORT).show()
+            UI.pop( "NFC unavailable")
         }
 
         // encapsulate sending logic in a separate class
-        this.outcomingNfccallback = NfcSender(this)
-        this.nfcAdapter?.setOnNdefPushCompleteCallback(outcomingNfccallback, this)
-        this.nfcAdapter?.setNdefPushMessageCallback(outcomingNfccallback, this)
+        this.nfcCallback = Nfc(this)
+        this.nfcAdapter?.setOnNdefPushCompleteCallback(nfcCallback, this)
+        this.nfcAdapter?.setNdefPushMessageCallback(nfcCallback, this)
     }
 
     var color: Color = Storage.get(Data.LAST_USED_COLOR) as Color
@@ -83,6 +81,7 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
             }
         }
 
+    // found in Styles: ButtonCircleColor
     fun selectColor(v: View?) {
         when (v?.id) {
             R.id.btn_color_red    -> color = Color.RED
@@ -162,7 +161,7 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
         finish()
     }
 
-    fun setMessage(message: Message) {
+    fun setOutgoingMessage(message: Message) {
         updateFields(message)
         updateUiColors(message.color)
         Storage.add(Data.RECEIVED_MESSAGES, message)
@@ -197,13 +196,13 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
     // NFC
 
     override fun onNewIntent(intent: Intent) {
-        receiveMessageFromDevice(intent)
+        receiveIncomingMessage(intent)
     }
 
     override fun onResume() {
         super.onResume()
         enableForegroundDispatch(this, this.nfcAdapter)
-        receiveMessageFromDevice(intent)
+        receiveIncomingMessage(intent)
     }
 
     override fun onPause() {
@@ -211,26 +210,20 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
         disableForegroundDispatch(this, this.nfcAdapter)
     }
 
-    private fun receiveMessageFromDevice(intent: Intent) {
+    private fun receiveIncomingMessage(intent: Intent) {
         val action = intent.action
         if (NfcAdapter.ACTION_NDEF_DISCOVERED == action) {
-            val parcelables = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
-
-            val inNdefMessage = parcelables[0] as NdefMessage
-            val inNdefRecords = inNdefMessage.records
-            val ndefRecord_0 = inNdefRecords[0]
-
-            val inMessage = String(ndefRecord_0.payload)
-            //TODO: set text with inMessage
+            val extraMessage = intent.getParcelableArrayExtra(Toro.EXTRA_INCOMING_MESSAGE)
+            val incomingMessage = String((extraMessage[0] as NdefMessage).records[0].payload)
             try {
-                val message = Message.fromJson(inMessage)
+                val message = Message.fromJson(incomingMessage)
                 if (message != null) {
-                    setMessage(message)
+                    setOutgoingMessage(message)
                 } else {
-                    UI.pop(this@MessageActivity, "Error Parsing Message")
+                    throw Exception()
                 }
             } catch (e: Exception) {
-                UI.pop(this@MessageActivity, "Error Parsing Message")
+                UI.pop("Error Parsing Message")
             }
         }
     }
@@ -284,6 +277,6 @@ class MessageActivity : AppCompatActivity(), NfcSender.NfcActivity {
         // should be triggered on UI thread. We specify it explicitly
         // cause onNdefPushComplete is called from the Binder thread
         Storage.add(Data.SENT_MESSAGES, getCurrentMessage())
-        runOnUiThread { UI.pop(this@MessageActivity, "Beaming Complete!") }
+        runOnUiThread { UI.pop("Beaming Complete!") }
     }
 }

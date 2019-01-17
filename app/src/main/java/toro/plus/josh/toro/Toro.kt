@@ -10,7 +10,11 @@ class Toro() : Application() {
     companion object {
         val TAG = Toro::class.java.name
 
+        lateinit var instance: Toro
+            private set
+
         // constants
+        const val BLANK = ""
         const val DATE_STRING = "MM/dd/yyyy"
         const val MIME_APPLICATION_JSON = "application/json"
 
@@ -19,15 +23,19 @@ class Toro() : Application() {
 
         // extras
         @JvmStatic
-        val EXTRA_MESSAGE = "$TAG.message"
+        val EXTRA_OUTGOING_MESSAGE = "$TAG.outgoingMessage"
+        @JvmStatic
+        val EXTRA_INCOMING_MESSAGE = "$TAG.incomingMessage"
 
         // utilities
         @JvmStatic
         fun getDate() = SimpleDateFormat(DATE_STRING, Locale.US).format(Calendar.getInstance().time)
     }
 
+
     override fun onCreate() {
         super.onCreate()
-        Storage.init(this)
+        instance = this
+        Storage.init()
     }
 }

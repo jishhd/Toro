@@ -2,7 +2,13 @@ package toro.plus.josh.toro.models.enums
 
 import toro.plus.josh.toro.R
 
-enum class Color(val colorPale: Int, val colorLight: Int, val color: Int, val colorDark: Int, val colorAccent: Int) {
+enum class Color(
+    val colorPale: Int,
+    val colorLight: Int,
+    val color: Int,
+    val colorDark: Int,
+    val colorAccent: Int
+) {
     RED(
         R.color.pale_red,
         R.color.light_red,

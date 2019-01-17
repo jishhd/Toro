@@ -41,7 +41,7 @@ class ToroActivity : AppCompatActivity() {
             field = color
             Storage.put(Data.LAST_USED_COLOR, color)
         }
-    private lateinit var referrerClient: InstallReferrerClient
+    private lateinit var installReferrer: InstallReferrerClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,14 +49,12 @@ class ToroActivity : AppCompatActivity() {
 
         message_recycler?.adapter = adapter
         message_recycler?.itemAnimator = DefaultItemAnimator()
-
-        messagesSent.addAll((Storage.get(Data.SENT_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
-        messagesReceived.addAll((Storage.get(Data.RECEIVED_MESSAGES) as ArrayList<Message>?) ?: arrayListOf())
-
-        UI.runLayoutAnimation(message_recycler)
-
         btn_filter?.setOnClickListener { rotateFilter() }
         fab?.setOnClickListener { goToMessage(Message()) }
+
+        messagesSent.addAll((Storage.get<ArrayList<Message>>(Data.SENT_MESSAGES)))
+        messagesReceived.addAll((Storage.get<ArrayList<Message>>(Data.RECEIVED_MESSAGES)))
+        UI.animateLoad(message_recycler)
 
         if (!(Storage.has(Data.LAUNCHED))) {
             initInstallReferrer()
@@ -64,20 +62,21 @@ class ToroActivity : AppCompatActivity() {
         Storage.put(Data.LAUNCHED, true)
     }
 
+
     // UTLITIES
 
     fun initInstallReferrer() {
-        referrerClient = InstallReferrerClient.newBuilder(this).build()
-        referrerClient.startConnection(object : InstallReferrerStateListener {
+        installReferrer = InstallReferrerClient.newBuilder(this).build()
+        installReferrer.startConnection(object : InstallReferrerStateListener {
             override fun onInstallReferrerSetupFinished(responseCode: Int) {
                 when (responseCode) {
                     InstallReferrerClient.InstallReferrerResponse.OK -> {
                         // Connection established
-                        val response: ReferrerDetails = referrerClient.installReferrer
+                        val response: ReferrerDetails = installReferrer.installReferrer
 
-                        UI.pop(this@ToroActivity, response.installReferrer)
+                        UI.pop(response.installReferrer)
 
-                        referrerClient.endConnection()
+                        installReferrer.endConnection()
                     }
                     InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
                         // API not available on the current Play Store app
@@ -103,7 +102,7 @@ class ToroActivity : AppCompatActivity() {
 
     fun goToMessage(message: Message) {
         val intent = Intent(this@ToroActivity, MessageActivity::class.java)
-        intent.putExtra(Toro.EXTRA_MESSAGE, message)
+        intent.putExtra(Toro.EXTRA_OUTGOING_MESSAGE, message)
         startActivityForResult(intent, Toro.REQUEST_MESSAGE)
     }
 
@@ -150,7 +149,7 @@ class ToroActivity : AppCompatActivity() {
             }
         }
 
-        UI.runLayoutAnimation(message_recycler)
+        UI.animateLoad(message_recycler)
     }
 
     private fun updateUiColors(newColor: Color) {
@@ -160,6 +159,7 @@ class ToroActivity : AppCompatActivity() {
         UI.updateTintListColor(this@ToroActivity, fab, color.colorAccent, newColor.colorAccent)
         UI.updateTintListColor(this@ToroActivity, btn_filter, color.colorPale, newColor.colorPale)
     }
+
 
     // INNER CLASSES
 
@@ -235,7 +235,7 @@ class ToroActivity : AppCompatActivity() {
         messagesSent.addAll(updatedMessages(Filter.SENT))
         messagesReceived.clear()
         messagesReceived.addAll(updatedMessages(Filter.RECEIVED))
-        UI.runLayoutAnimation(message_recycler)
+        UI.animateLoad(message_recycler)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
